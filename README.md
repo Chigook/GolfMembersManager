@@ -1,2 +1,3 @@
-# rfid
-rfid for raspberryPi4
+# GolfMembersManager
+
+RFID for raspberryPi4
