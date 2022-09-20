@@ -1,18 +1,23 @@
 #ifndef LISTENER_H
 #define LISTENER_H
 
-#include "mfrc522.h"
+#include <string.h>
+#include "CardReader.h"
+#include "Controller.h"
+#include "Monitor.h"
 
 class Listener
 {
 private:
-    mfrc522 *rfid;
+    CardReader *rfid;
+    Controller *controller;
     uint8_t rfidData[16];
 
 public:
-    Listener(mfrc522 *rfid);
+    Listener();
     ~Listener();
     void checkEvent();
+    bool checkRFID();
 
 };
 
