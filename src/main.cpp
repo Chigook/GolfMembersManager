@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "mfrc522.h"
 #include "Listener.h"
 #include "GolfMembershipManager.h"
@@ -6,10 +7,9 @@
 
 int main(void)
 {
-    // GolfMembershipManager golfMembershipManager;
-    // golfMembershipManager.run();
-    MembersEntity membersEntity;
-
+    GolfMembershipManager golfMembershipManager;
+    golfMembershipManager.run();
+    
     return 0;
 }
 /*

@@ -4,7 +4,7 @@
 struct MemberInfo
 {
     int id;
-    char name[10];
+    char name[20];
     char address[40];
     char phoneNumber[15];
     int cardNum[5];

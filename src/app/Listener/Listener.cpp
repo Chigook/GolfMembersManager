@@ -5,6 +5,7 @@ Listener::Listener()
 {
     rfid = new CardReader(new SPI(10, 3000000));
     controller = new Controller();
+    modeButton = new ManageButton(29, "ModeButton");
     // this->rfid = rfid; //초기화 2 //초기화 1이 더 좋은 방법
 }
 
@@ -17,6 +18,9 @@ void Listener::checkEvent()
 {
     if(checkRFID()){
         controller->updateEvent(rfid->getCardNumber());
+    }
+    if(modeButton->checkButton()){
+        controller->updateEvent(modeButton->getButtonData());
     }
 }
 
