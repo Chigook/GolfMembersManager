@@ -16,7 +16,7 @@ private:
     uint8_t rfidData[16];
 
 public:
-    Listener();
+    Listener(Controller *controller);
     ~Listener();
     void checkEvent();
     bool checkRFID();

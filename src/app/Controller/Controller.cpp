@@ -1,10 +1,11 @@
 #include "Controller.h"
 #include <iostream>
 
-Controller::Controller()
+Controller::Controller(MembersManageService *membersManageService)
 {
     monitor = new Monitor();
-    membersManageService = new MembersManageService();
+    // membersManageService = new MembersManageService();
+    this->membersManageService = membersManageService;
 }
 
 Controller::~Controller()

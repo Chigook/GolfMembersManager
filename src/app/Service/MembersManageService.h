@@ -5,19 +5,26 @@
 
 #include <string>
 #include <cstring>
+#include <vector>
 #include "MembersEntity.h"
 #include "MemberInfo.h"
+#include "ComDev.h"
+#include "LCD.h"
 
 enum {CARD_READER, CARD_REGISTER};
 
 class MembersManageService
 {
 private:
-    int membersManagerState;
     MembersEntity *membersEntity;
+    int membersManagerState;
+    std::vector<MemberInfo> vecMembersList;
+    int count;
+    ComDev *comDev;
+    // LCD *lcd;
 
 public:
-    MembersManageService();
+    MembersManageService(ComDev *comDev);
     ~MembersManageService();
     void updateStateEvent(std::string devName);
     void checkCardNumber(int *cardNum);

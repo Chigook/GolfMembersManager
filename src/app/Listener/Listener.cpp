@@ -1,10 +1,11 @@
 #include "Listener.h"
 
-Listener::Listener()
+Listener::Listener(Controller *controller)
 // : rfid(new CardReader(new SPI(10, 3000000))), controller(new Controller()) //초기화 1 //-> mfrc522 *rfid = rfid;
 {
     rfid = new CardReader(new SPI(10, 3000000));
-    controller = new Controller();
+    // controller = new Controller();
+    this->controller = controller;
     modeButton = new ManageButton(29, "ModeButton");
     // this->rfid = rfid; //초기화 2 //초기화 1이 더 좋은 방법
 }

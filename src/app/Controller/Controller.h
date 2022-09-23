@@ -13,10 +13,9 @@ private:
     MembersManageService *membersManageService;
 
 public:
-    Controller();
+    Controller(MembersManageService *membersManageService);
     ~Controller();
     void updateEvent(DeviceData data);
-
 
 };
 
