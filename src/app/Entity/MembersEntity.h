@@ -6,7 +6,9 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <cstring>
 #include "MemberInfo.h"
+#include "LCD.h"
 
 class MembersEntity
 {
@@ -14,6 +16,7 @@ private:
     std::vector<MemberInfo> vecMembersList;     //vector의 자료 형태
     MemberInfo memberInfo;
     FILE *fpDBData;
+    LCD *lcd;
 
 public:
     MembersEntity();

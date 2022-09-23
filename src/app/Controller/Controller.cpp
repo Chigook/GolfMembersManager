@@ -6,6 +6,7 @@ Controller::Controller(MembersManageService *membersManageService)
     monitor = new Monitor();
     // membersManageService = new MembersManageService();
     this->membersManageService = membersManageService;
+    
 }
 
 Controller::~Controller()
@@ -25,5 +26,8 @@ void Controller::updateEvent(DeviceData data)
     }
     if (data.devName == "ModeButton"){
         membersManageService->updateStateEvent("ModeButton");
+    }
+    if(data.devName == "clockUpdate"){
+        membersManageService->updateStateEvent("clockUpdate");
     }
 }

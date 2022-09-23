@@ -19,6 +19,8 @@ add_executable(${PROJECT_NAME}
     ./src/hw/I2C/I2C.cpp
     ./src/hw/tcpServer/tcpServer.cpp
     ./src/hw/tcpServer/ComDev.cpp
+    ./src/hw/ClockCheck/ClockCheck.cpp
+    ./src/hw/Piezo/Piezo.cpp
 )  
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -35,6 +37,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/hw/LCD
     ./src/hw/I2C
     ./src/hw/tcpServer
+    ./src/hw/ClockCheck
+    ./src/hw/Piezo
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

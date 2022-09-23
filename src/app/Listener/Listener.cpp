@@ -7,6 +7,8 @@ Listener::Listener(Controller *controller)
     // controller = new Controller();
     this->controller = controller;
     modeButton = new ManageButton(29, "ModeButton");
+    clockCheck = new ClockCheck("clockUpdate");
+    piezo = new Piezo(6);
     // this->rfid = rfid; //초기화 2 //초기화 1이 더 좋은 방법
 }
 
@@ -23,6 +25,11 @@ void Listener::checkEvent()
     if(modeButton->checkButton()){
         controller->updateEvent(modeButton->getButtonData());
     }
+
+    if(clockCheck->isUpdate())
+    {
+        controller->updateEvent(clockCheck->getClockData());
+    }
 }
 
 bool Listener::checkRFID()
@@ -33,7 +40,9 @@ bool Listener::checkRFID()
     }
     prevCheckTime = millis();
 
-    if(rfid->isCard()) return true;
-
+    if(rfid->isCard()){
+        piezo->Beep(3);
+        return true;
+    }
     return false;
 }

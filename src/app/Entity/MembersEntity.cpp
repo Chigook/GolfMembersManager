@@ -1,9 +1,9 @@
 #include "MembersEntity.h"
-#include <cstring>
 
 MembersEntity::MembersEntity()
 {
     loadMembersInfo();
+    lcd = new LCD();
 }
 
 MembersEntity::~MembersEntity()
@@ -60,6 +60,8 @@ void MembersEntity::printMemberInfo(std::string name)
 
 void MembersEntity::printMemberInfo(int *cardNum)
 {
+    char buff[30];
+
     for(const auto &member : vecMembersList) {
         if(memcmp (member.cardNum, cardNum, sizeof(member.cardNum)) == 0)
         {
@@ -73,9 +75,12 @@ void MembersEntity::printMemberInfo(int *cardNum)
                    member.cardNum[2],
                    member.cardNum[3],
                    member.cardNum[4]);
+            sprintf(buff, "%04d pass", member.id);
+            lcd->WriteStringXY(1, 0, buff);
             return;
         }
     }
+    
 }
 
 bool MembersEntity::findMemberInfo(std::string name)

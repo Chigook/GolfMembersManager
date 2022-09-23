@@ -6,6 +6,8 @@
 #include "Controller.h"
 #include "Monitor.h"
 #include "ManageButton.h"
+#include "ClockCheck.h"
+#include "Piezo.h"
 
 class Listener
 {
@@ -14,6 +16,8 @@ private:
     ManageButton *modeButton;
     Controller *controller;
     uint8_t rfidData[16];
+    ClockCheck *clockCheck;
+    Piezo *piezo;
 
 public:
     Listener(Controller *controller);

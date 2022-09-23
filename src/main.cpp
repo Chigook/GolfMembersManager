@@ -11,7 +11,8 @@
 #include "ComDev.h"
 #include "I2C.h"
 #include "LCD.h"
-
+#include "ClockCheck.h"
+#include "Piezo.h"
 
 void serverThread(tcpServer *server)
 {
@@ -35,12 +36,13 @@ void serverThread(tcpServer *server)
 
 int main(void)
 {
-    
+    LCD lcd(new I2C("/dev/i2c-1", 0x27));
     tcpServer *cardTcpServer = new tcpServer(5100);
     ComDev *comDev = new ComDev(cardTcpServer);
-    MembersManageService *memberManageservice = new MembersManageService(comDev);
+    MembersManageService *memberManageservice = new MembersManageService(comDev, &lcd);
     Controller *controller = new Controller(memberManageservice);
     Listener *listener = new Listener(controller);
+
     std::thread threadFunc(serverThread, cardTcpServer);
 
 
@@ -50,7 +52,7 @@ int main(void)
     while(1)
     {
         listener->checkEvent();
-        delay(50);
+        memberManageservice->StateLcd();
     }
     
     return 0;

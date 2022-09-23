@@ -6,6 +6,8 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <wiringPi.h>
+#include <iostream>
 #include "MembersEntity.h"
 #include "MemberInfo.h"
 #include "ComDev.h"
@@ -17,17 +19,21 @@ class MembersManageService
 {
 private:
     MembersEntity *membersEntity;
-    int membersManagerState;
     std::vector<MemberInfo> vecMembersList;
-    int count;
     ComDev *comDev;
-    // LCD *lcd;
+    LCD *lcd;
+    int membersManagerState;
+    int count;
+    time_t curTime;
+    char buff[30];
 
 public:
-    MembersManageService(ComDev *comDev);
+    MembersManageService(ComDev *comDev, LCD *lcd);
     ~MembersManageService();
     void updateStateEvent(std::string devName);
     void checkCardNumber(int *cardNum);
+    void StateLcd();
+    void StateClock();
 };
 
 #endif
