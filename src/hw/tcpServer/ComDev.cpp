@@ -18,3 +18,10 @@ void ComDev::sendData(int *cardNum)
     sprintf(sendBuff, "%02x-%02x-%02x-%02x-%02x", cardNum[0], cardNum[1], cardNum[2], cardNum[3], cardNum[4]);
     cardTcpServer->sendData(sendBuff, strlen(sendBuff));
 }
+
+void ComDev::sendData(std::string Name)
+{
+    char sendBuff[1000];
+    sprintf(sendBuff, "%s", Name);
+    cardTcpServer->sendData(sendBuff, strlen(sendBuff));
+}

@@ -4,6 +4,8 @@
 #pragma once
 
 #include "tcpServer.h"
+#include <string>
+#include <cstring>
 #include <thread>
 
 class ComDev
@@ -16,6 +18,7 @@ public:
     ComDev(tcpServer *cardTcpServer);
     ~ComDev();
     void sendData(int *cardNum);
+    void sendData(std::string Name);
 
 
 };

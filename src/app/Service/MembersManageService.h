@@ -13,7 +13,7 @@
 #include "ComDev.h"
 #include "LCD.h"
 
-enum {CARD_READER, CARD_REGISTER};
+enum {CARD_READER, CARD_REGISTER, LOOK_FOR_MEMEBER, DELETE_MEMBER};
 
 class MembersManageService
 {
@@ -32,6 +32,7 @@ public:
     ~MembersManageService();
     void updateStateEvent(std::string devName);
     void checkCardNumber(int *cardNum);
+    void ManageMember(std::string Name);
     void StateLcd();
     void StateClock();
 };

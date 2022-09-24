@@ -14,6 +14,7 @@ class Listener
 private:
     CardReader *rfid;
     ManageButton *modeButton;
+    ManageButton *manageButton;
     Controller *controller;
     uint8_t rfidData[16];
     ClockCheck *clockCheck;

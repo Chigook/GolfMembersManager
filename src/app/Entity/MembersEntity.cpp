@@ -88,7 +88,7 @@ bool MembersEntity::findMemberInfo(std::string name)
     for(const auto &member : vecMembersList) {
         if(strcmp(member.name, name.c_str()) == 0)
         {
-            printMemberInfo(member.id);
+            // printMemberInfo(member.id);
             return true;
         }
     }
@@ -122,6 +122,21 @@ bool MembersEntity::delMemberInfo(int *cardNum)
     for(itrMember = vecMembersList.begin(); itrMember != vecMembersList.end(); itrMember++)      //itrMember가 처음부터 vecMembersLists의 제일 뒤와 값이 같지 않으면 차례대로 증가한다
     {
         if (memcmp(itrMember->cardNum, cardNum, sizeof(itrMember->cardNum)) == 0)
+        {
+            vecMembersList.erase(itrMember);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MembersEntity::delMemberInfo(char *Name)
+{
+    std::vector<MemberInfo>::iterator itrMember;
+
+    for(itrMember = vecMembersList.begin(); itrMember != vecMembersList.end(); itrMember++)      //itrMember가 처음부터 vecMembersLists의 제일 뒤와 값이 같지 않으면 차례대로 증가한다
+    {
+        if (memcmp(itrMember->name, Name, sizeof(itrMember->name)) == 0)
         {
             vecMembersList.erase(itrMember);
             return true;
