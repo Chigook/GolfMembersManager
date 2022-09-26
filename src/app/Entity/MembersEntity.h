@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <iostream>
+#include <wiringPi.h>
 #include <string>
 #include <cstring>
 #include "MemberInfo.h"
@@ -24,7 +25,7 @@ public:
     void loadMembersInfo();
     void addMemberInfo(MemberInfo member);
     bool delMemberInfo(int *cardNum);
-    bool delMemberInfo(char *Name);
+    bool delMemberInfo(std::string name);
     void makeMemoryToDB();
     void printMemberInfo(int index);
     void printMemberInfo(std::string name);

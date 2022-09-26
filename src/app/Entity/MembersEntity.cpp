@@ -60,8 +60,6 @@ void MembersEntity::printMemberInfo(std::string name)
 
 void MembersEntity::printMemberInfo(int *cardNum)
 {
-    char buff[30];
-
     for(const auto &member : vecMembersList) {
         if(memcmp (member.cardNum, cardNum, sizeof(member.cardNum)) == 0)
         {
@@ -75,16 +73,15 @@ void MembersEntity::printMemberInfo(int *cardNum)
                    member.cardNum[2],
                    member.cardNum[3],
                    member.cardNum[4]);
-            sprintf(buff, "%04d pass", member.id);
-            lcd->WriteStringXY(1, 0, buff);
             return;
         }
     }
-    
 }
+
 
 bool MembersEntity::findMemberInfo(std::string name)
 {
+
     for(const auto &member : vecMembersList) {
         if(strcmp(member.name, name.c_str()) == 0)
         {
@@ -130,13 +127,13 @@ bool MembersEntity::delMemberInfo(int *cardNum)
     return false;
 }
 
-bool MembersEntity::delMemberInfo(char *Name)
+bool MembersEntity::delMemberInfo(std::string name)
 {
     std::vector<MemberInfo>::iterator itrMember;
 
     for(itrMember = vecMembersList.begin(); itrMember != vecMembersList.end(); itrMember++)      //itrMember가 처음부터 vecMembersLists의 제일 뒤와 값이 같지 않으면 차례대로 증가한다
     {
-        if (memcmp(itrMember->name, Name, sizeof(itrMember->name)) == 0)
+        if (strcmp(itrMember->name, name.c_str()) == 0)
         {
             vecMembersList.erase(itrMember);
             return true;

@@ -7,10 +7,10 @@ MembersManageService::MembersManageService(ComDev *comDev, LCD *lcd)
     membersManagerState = CARD_READER;
     this->comDev = comDev;
     this->lcd = lcd;
+    servomotor = new ServoMotor(0);
     count = 100000;
     curTime = 0;
     buff[30] = {0,};
-    wiringPiSetup();
 }
 
 MembersManageService::~MembersManageService()
@@ -68,13 +68,19 @@ void MembersManageService::checkCardNumber(int *cardNum)
     {
         case CARD_READER :
             if(membersEntity->findMemberInfo(cardNum)){
-                printf("Registered Member!:)\n");
-                membersEntity->printMemberInfo(cardNum);
                 comDev->sendData(cardNum);
+                membersEntity->printMemberInfo(cardNum);
+                printf("Registered Member!:)\n");
+                sprintf(buff, "%02x-%02x-%02x-%02x-%02x  ", cardNum[0], cardNum[1], cardNum[2], cardNum[3], cardNum[4]);
+                lcd->WriteStringXY(1, 0, buff);
+                if(servomotor->servomotor_open2sec()){
+                    sprintf(buff, "                ");
+                    lcd->WriteStringXY(1, 0, buff);
+                }
             }
             else{
-                printf("Not Registered Member!:(\n");
-            }
+                    printf("Not Registered Member!:(\n");
+                }
         break;
 
         case CARD_REGISTER :
@@ -91,6 +97,7 @@ void MembersManageService::checkCardNumber(int *cardNum)
             memcpy(tempMember.cardNum, cardNum, sizeof(tempMember.cardNum));
     
             membersEntity->addMemberInfo(tempMember);
+            membersEntity->makeMemoryToDB();
             
             printf("Member Registered!:)\n");
             
@@ -99,9 +106,13 @@ void MembersManageService::checkCardNumber(int *cardNum)
         break;
 
         case DELETE_MEMBER:
-            if(membersEntity->delMemberInfo(cardNum)){
-            comDev->sendData(cardNum);
-            printf("Finished to delete a Member!:)\n");
+            if(membersEntity->findMemberInfo(cardNum)){
+                if(membersEntity->delMemberInfo(cardNum))
+                {
+                    membersEntity->makeMemoryToDB();
+                    comDev->sendData(cardNum);
+                    printf("Finished to delete a Member!:)\n");
+                }
             }
             else
             {
@@ -117,8 +128,7 @@ void MembersManageService::ManageMember(std::string Name)
 
     switch(membersManagerState)
     {
-
-    case LOOK_FOR_MEMEBER:
+    case LOOK_FOR_MEMEBER :
         if (Name == "ManageButton")
         {
             printf("이름을 입력하세요:");
@@ -141,10 +151,14 @@ void MembersManageService::ManageMember(std::string Name)
         {
             printf("이름을 입력하세요:");
             cin.getline(tempMember.name, 20, '\n');
-            if (membersEntity->delMemberInfo(tempMember.name))
+            if (membersEntity->findMemberInfo(tempMember.name))
             {
-                comDev->sendData(tempMember.name);
-                printf("Finished to delete a Member!:)\n");
+                if (membersEntity->delMemberInfo(tempMember.name))
+                {
+                    membersEntity->makeMemoryToDB();
+                    comDev->sendData(tempMember.name);
+                    printf("Finished to delete a Member!:)\n");
+                }
             }
             else
             {
@@ -186,7 +200,6 @@ void MembersManageService::StateLcd()
 
 void MembersManageService::StateClock()
 {
-    // char buff[30];
     curTime = time(NULL);
     struct tm *timeDate = localtime(&curTime);
     sprintf(buff, "%02d:%02d:%02d", timeDate->tm_hour, timeDate->tm_min, timeDate->tm_sec);

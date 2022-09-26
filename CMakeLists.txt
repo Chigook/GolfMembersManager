@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}
     ./src/hw/tcpServer/ComDev.cpp
     ./src/hw/ClockCheck/ClockCheck.cpp
     ./src/hw/Piezo/Piezo.cpp
+    ./src/hw/ServoMotor/ServoMotor.cpp
 )  
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -39,6 +40,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/hw/tcpServer
     ./src/hw/ClockCheck
     ./src/hw/Piezo
+    ./src/hw/ServoMotor
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC

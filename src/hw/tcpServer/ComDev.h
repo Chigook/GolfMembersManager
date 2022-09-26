@@ -19,6 +19,7 @@ public:
     ~ComDev();
     void sendData(int *cardNum);
     void sendData(std::string Name);
+    void writeData(std::string Name);
 
 
 };

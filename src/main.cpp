@@ -13,17 +13,27 @@
 #include "LCD.h"
 #include "ClockCheck.h"
 #include "Piezo.h"
+#include "ServoMotor.h"
 
 void serverThread(tcpServer *server)
 {
     char recvBuff[BUFSIZ];
     int recvLen;
 
+    MembersEntity *membersEntity = new MembersEntity();
+    ServoMotor *servomotor = new ServoMotor(0);
+
     while (server->waitAccept() > 0)
     {
         server->setClientState(true);
         while((recvLen = server->recvData(recvBuff, sizeof(recvBuff))) > 0)
         {
+            if(membersEntity->findMemberInfo(recvBuff)){
+                membersEntity->printMemberInfo(recvBuff);
+            }
+            if(strcmp(recvBuff, "open") == 0){
+                servomotor->servomotor_open2sec();
+            }
             recvBuff[recvLen] = '\0';
             server->sendData(recvBuff, recvLen);
             printf("received : %s\n", recvBuff);
@@ -51,6 +61,7 @@ int main(void)
 
     while(1)
     {
+
         listener->checkEvent();
         memberManageservice->StateLcd();
     }

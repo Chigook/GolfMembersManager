@@ -8,6 +8,7 @@
 #include "ManageButton.h"
 #include "ClockCheck.h"
 #include "Piezo.h"
+#include "ServoMotor.h"
 
 class Listener
 {
